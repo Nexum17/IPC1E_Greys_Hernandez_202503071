@@ -1,0 +1,11 @@
+12/09/2026 05:11|admin1|AUTENTICACION|LOGIN_OK|Inicio de sesión correcto
+12/09/2026 05:15|admin1|ANIMALES|ALTA|Animal A-999 registrado
+12/09/2026 05:16|admin1|ANIMALES|ALTA|Animal A-895 registrado
+12/09/2026 05:16|admin1|ADOPTANTES|ALTA|Adoptante AD-895 registrado
+12/09/2026 05:17|admin1|ADOPTANTES|ALTA|Adoptante AD-874 registrado
+12/09/2026 05:17|admin1|UBICACIONES|ASIGNAR|A-003 asignado a [0][0]
+12/09/2026 05:18|admin1|UBICACIONES|ASIGNAR|A-002 asignado a [0][3]
+12/09/2026 05:18|admin1|UBICACIONES|ASIGNAR|A-999 asignado a [0][5]
+12/09/2026 05:18|admin1|UBICACIONES|ASIGNAR|A-895 asignado a [1][4]
+12/09/2026 05:20|admin1|SOLICITUDES|ALTA|Solicitud S-986 registrada
+12/09/2026 05:20|admin1|SOLICITUDES|ALTA|Solicitud S-562 registrada
