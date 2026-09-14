@@ -1,11 +1,8 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
-// Panel informativo requerido por el enunciado (sección 4.2): la interfaz
-// principal debe incluir, además de los módulos operativos, los datos del
-// estudiante. No tiene lógica de negocio, solo muestra información fija.
 public class PanelEstudiante extends JPanel {
 
     private static final String NOMBRE = "Greys Hernández";
