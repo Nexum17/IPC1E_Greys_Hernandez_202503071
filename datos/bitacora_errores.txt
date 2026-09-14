@@ -1,2 +1,0 @@
-14/09/2026 01:31|admin1|ANIMALES|VALIDACION|Código 'A001' con formato inválido
-14/09/2026 01:31|admin1|ANIMALES|VALIDACION|Estado clínico 'SANO' no permitido
