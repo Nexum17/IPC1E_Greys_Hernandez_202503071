@@ -33,11 +33,11 @@ public class Validador {
 
     // Valor entero dentro de un rango inclusivo
     public static boolean enRango(int valor, int minimo, int maximo) {
-        return valor >= minimo && valor <= maximo;
+        return valor >= minimo && valor <= maximo;//edad 0-25
     }
 
     // Campo de texto no vacío y sin ser solo espacios
     public static boolean noVacio(String texto) {
-        return texto != null && !texto.trim().isEmpty();
+        return texto != null && !texto.trim().isEmpty();//varieble∃→quita espacios extras→verificar si hay texto
     }
 }

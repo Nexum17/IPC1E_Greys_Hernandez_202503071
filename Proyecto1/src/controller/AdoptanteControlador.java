@@ -49,21 +49,21 @@ public class AdoptanteControlador {
             return "ERROR: Se alcanzó el máximo de adoptantes registrados";
         }
 
-        Adoptante nuevo = new Adoptante(codigo, nombre, dpi, telefono);
+        Adoptante nuevo = new Adoptante(codigo, nombre, dpi, telefono);//todo lo anterior es corrrecto?→ok, pasalos al contrucctor para el "contenedor global"
         Almacen.adoptantes[Almacen.cantidadAdoptantes] = nuevo;
-        Almacen.cantidadAdoptantes++;
+        Almacen.cantidadAdoptantes++;// Incrementa en uno el contador cantidadAdoptantes para dejar lista la posicióndel siguiente registro y mantener actualizado el total del sistem
 
         Bitacora.accion("ADOPTANTES", "ALTA", "Adoptante " + codigo + " registrado");
         return "OK: Adoptante registrado correctamente";
     }
 
     public Adoptante buscarPorCodigo(String codigo) {
-        for (int i = 0; i < Almacen.cantidadAdoptantes; i++) {
-            if (Almacen.adoptantes[i].getCodigo().equalsIgnoreCase(codigo)) {
+        for (int i = 0; i < Almacen.cantidadAdoptantes; i++) {//inicia en 0 y recorre hasta cant actual
+            if (Almacen.adoptantes[i].getCodigo().equalsIgnoreCase(codigo)) {// Accede al adoptante guardado en la posición actual→Obtiene el código guardado en ese objeto Adoptante→permite busquedas ignorando mayusculas y  minusculas
                 return Almacen.adoptantes[i];
             }
         }
-        return null;
+        return null;// si encuentra el registro, devolverá el objeto Adoptante completo. Si no lo encuentra, devolverá null.
     }
 
     public Adoptante buscarPorDpi(String dpi) {
@@ -77,11 +77,11 @@ public class AdoptanteControlador {
 
     public String editar(String codigo, String nuevoNombre, String nuevoTelefono) {
         Adoptante adoptante = buscarPorCodigo(codigo);
-        if (adoptante == null) {
+        if (adoptante == null) {//codigo ingresado!∃→falla→bitacoraerror→detiene proce y devuelve mensaje "error"
             Bitacora.error("ADOPTANTES", "VALIDACION", "Código " + codigo + " no existe");
             return "ERROR: Adoptante no encontrado";
         }
-
+//corrobora tel/new name cumpla parametros→si falla, cancela edicion y retorna a respect. error
         if (!Validador.esSoloLetras(nuevoNombre)) {
             Bitacora.error("ADOPTANTES", "VALIDACION", "Nombre '" + nuevoNombre + "' contiene caracteres inválidos");
             return "ERROR: El nombre solo debe contener letras y espacios";
@@ -93,16 +93,16 @@ public class AdoptanteControlador {
         }
 
         adoptante.setNombre(nuevoNombre);
-        adoptante.setTelefono(nuevoTelefono);
+        adoptante.setTelefono(nuevoTelefono);//actualizan valores mediante encapsulamiento(setter)
         Bitacora.accion("ADOPTANTES", "EDITAR", "Adoptante " + codigo + " actualizado");
-        return "OK: Adoptante actualizado correctamente";
+        return "OK: Adoptante actualizado correctamente";//registra bitacora→mensaje exito
     }
-
+//convertir obj save a matriz bidim
     public Object[][] listarTodos() {
-        Object[][] filas = new Object[Almacen.cantidadAdoptantes][];
-        for (int i = 0; i < Almacen.cantidadAdoptantes; i++) {
+        Object[][] filas = new Object[Almacen.cantidadAdoptantes][];//matriz corresp. a No. adoptantes→evita enviar celdas vacías o nulas a la interfaz.
+        for (int i = 0; i < Almacen.cantidadAdoptantes; i++) {//recorre c/casilla ocup. toma atributos y los devuelve organizados en "filas"
             filas[i] = Almacen.adoptantes[i].aFilaTabla();
         }
-        return filas;
+        return filas;//entrega matriz completa
     }
 }

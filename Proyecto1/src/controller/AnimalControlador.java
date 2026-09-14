@@ -11,21 +11,21 @@ public class AnimalControlador {
 
     public AnimalControlador(UbicacionControlador ubicacionControlador) {
         this.ubicacionControlador = ubicacionControlador;
-    }
+    }//recibe ref. de ubicacioncontrol en el constructor→perimite comunicar con em model para asignar/verificar espacios
 
     public String registrar(String codigo, String nombre, String especie,
             String edadTexto, String estadoClinico) {
-
+// Si cualquiera de las dos cosas ocurre con codigo O con nombre, se activa la alerta de campo obligatorio↓.
         if (codigo == null || codigo.isEmpty() || nombre == null || nombre.isEmpty()) {
             Bitacora.error("ANIMALES", "VALIDACION", "Campos obligatorios vacíos");
             return "ERROR: Complete todos los campos";
         }
-
+//exige formato de codigo
         if (!Validador.esCodigo(codigo, "A")) {
             Bitacora.error("ANIMALES", "VALIDACION", "Código '" + codigo + "' con formato inválido");
             return "ERROR: El código debe tener formato A-000";
         }
-
+//busca que no este repetido
         if (existeCodigo(codigo)) {
             Bitacora.error("ANIMALES", "DUPLICADO", "Código " + codigo + " ya existe");
             return "ERROR: Ese código ya está registrado";
