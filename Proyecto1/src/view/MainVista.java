@@ -22,6 +22,7 @@ public class MainVista extends JFrame {
     private static final String VISTA_RESCATES = "RESCATES";
     private static final String VISTA_UBICACIONES = "UBICACIONES";
     private static final String VISTA_REPORTES = "REPORTES";
+    private static final String VISTA_ESTUDIANTE = "ESTUDIANTE";
 
     public MainVista(AuthControlador authControlador) {
         this.authControlador = authControlador;
@@ -72,6 +73,7 @@ public class MainVista extends JFrame {
         agregarOpcionMenu(menuModulos, "Rescates", VISTA_RESCATES);
         agregarOpcionMenu(menuModulos, "Ubicaciones", VISTA_UBICACIONES);
         agregarOpcionMenu(menuModulos, "Reportes", VISTA_REPORTES);
+        agregarOpcionMenu(menuModulos, "Datos del Estudiante", VISTA_ESTUDIANTE);
 
         JMenu menuSesion = new JMenu("Sesión");
         JMenuItem itemCerrarSesion = new JMenuItem("Cerrar sesión");
@@ -99,6 +101,7 @@ public class MainVista extends JFrame {
         panelCentral.add(new PanelRescates(rescateControlador), VISTA_RESCATES);
         panelCentral.add(new PanelUbicaciones(ubicacionControlador), VISTA_UBICACIONES);
         panelCentral.add(new PanelReportes(), VISTA_REPORTES);
+        panelCentral.add(new PanelEstudiante(), VISTA_ESTUDIANTE);
 
         add(panelCentral, BorderLayout.CENTER);
     }

@@ -53,7 +53,7 @@ public class RescateControlador {
     // Atiende un caso: si no se indica animal existente, genera uno nuevo
     // reutilizando el consecutivo del rescate (R-009 -> A-009).
     public String atender(String codigoRescate, String codigoAnimalExistente,
-            String especie, String edadTexto) {
+            String nombre, String especie, String edadTexto) {
 
         Rescate rescate = buscarPorCodigo(codigoRescate);
         if (rescate == null) {
@@ -85,8 +85,10 @@ public class RescateControlador {
             String consecutivo = codigoRescate.substring(codigoRescate.indexOf("-") + 1);
             codigoAnimalFinal = "A-" + consecutivo;
 
+            String nombreFinal = Validador.noVacio(nombre) ? nombre.trim() : "Sin nombre";
+
             String resultadoAlta = animalControlador.registrar(
-                    codigoAnimalFinal, "Sin nombre", especie, edadTexto, Animal.CLINICO_TRATAMIENTO);
+                    codigoAnimalFinal, nombreFinal, especie, edadTexto, Animal.CLINICO_TRATAMIENTO);
 
             if (resultadoAlta.startsWith("ERROR")) {
                 Bitacora.error("RESCATES", "VALIDACION",

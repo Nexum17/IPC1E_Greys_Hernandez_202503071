@@ -138,7 +138,7 @@ public class PanelRescates extends JPanel {
     private void abrirDialogoAtender(String codigoRescate) {
         JDialog dialogo = new JDialog((Frame) SwingUtilities.getWindowAncestor(this),
                 "Atender Rescate " + codigoRescate, true);
-        dialogo.setSize(380, 260);
+        dialogo.setSize(380, 320);
         dialogo.setLocationRelativeTo(this);
         dialogo.setLayout(new GridBagLayout());
         GridBagConstraints r = new GridBagConstraints();
@@ -154,17 +154,20 @@ public class PanelRescates extends JPanel {
         JTextField campoCodigoExistente = new JTextField(10);
         campoCodigoExistente.setEnabled(false);
 
+        JTextField campoNombreNuevo = new JTextField(10);
         JComboBox<String> comboEspecie = new JComboBox<>(
                 new String[] { Animal.ESPECIE_PERRO, Animal.ESPECIE_GATO });
         JTextField campoEdadNuevo = new JTextField(5);
 
         radioExistente.addActionListener(e -> {
             campoCodigoExistente.setEnabled(true);
+            campoNombreNuevo.setEnabled(false);
             comboEspecie.setEnabled(false);
             campoEdadNuevo.setEnabled(false);
         });
         radioNuevo.addActionListener(e -> {
             campoCodigoExistente.setEnabled(false);
+            campoNombreNuevo.setEnabled(true);
             comboEspecie.setEnabled(true);
             campoEdadNuevo.setEnabled(true);
         });
@@ -185,35 +188,49 @@ public class PanelRescates extends JPanel {
 
         r.gridx = 0;
         r.gridy = 3;
+        dialogo.add(new JLabel("Nombre (si es nuevo):"), r);
+        r.gridx = 1;
+        dialogo.add(campoNombreNuevo, r);
+
+        r.gridx = 0;
+        r.gridy = 4;
         dialogo.add(new JLabel("Especie (si es nuevo):"), r);
         r.gridx = 1;
         dialogo.add(comboEspecie, r);
 
         r.gridx = 0;
-        r.gridy = 4;
+        r.gridy = 5;
         dialogo.add(new JLabel("Edad (si es nuevo):"), r);
         r.gridx = 1;
         dialogo.add(campoEdadNuevo, r);
 
         JButton botonConfirmar = new JButton("Confirmar");
         r.gridx = 0;
-        r.gridy = 5;
+        r.gridy = 6;
         r.gridwidth = 2;
         dialogo.add(botonConfirmar, r);
+
+        JLabel etiquetaDialogo = new JLabel(" ");
+        etiquetaDialogo.setForeground(Color.RED);
+        r.gridy = 7;
+        dialogo.add(etiquetaDialogo, r);
 
         botonConfirmar.addActionListener(e -> {
             String codigoExistente = radioExistente.isSelected()
                     ? campoCodigoExistente.getText().trim()
                     : "";
+            String nombreNuevo = campoNombreNuevo.getText().trim();
             String especie = (String) comboEspecie.getSelectedItem();
             String edad = campoEdadNuevo.getText().trim();
 
-            String resultado = rescateControlador.atender(codigoRescate, codigoExistente, especie, edad);
-            mostrarResultado(resultado);
+            String resultado = rescateControlador.atender(codigoRescate, codigoExistente, nombreNuevo, especie, edad);
 
             if (resultado.startsWith("OK")) {
+                mostrarResultado(resultado);
                 refrescarTabla();
                 dialogo.dispose();
+            } else {
+                etiquetaDialogo.setText(resultado.replaceFirst("^ERROR: ", ""));
             }
         });
 
