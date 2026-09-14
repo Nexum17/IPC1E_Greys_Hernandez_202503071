@@ -12,9 +12,9 @@ public class Validador {
 
     // Solo letras (con tildes/ñ) y espacios — para nombres
     public static boolean esSoloLetras(String texto) {
-        if (texto == null || texto.isEmpty())
+        if (texto == null || texto.isEmpty())//metodo propio "boolean"→¿hay algo?
             return false;
-        return texto.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+");
+        return texto.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+");//comparemos si ingresado cumple parametros
     }
 
     // 13 dígitos numéricos — DPI
