@@ -86,10 +86,23 @@ public class PanelAnimales extends JPanel {
     }
 
     private JScrollPane construirTabla() {
-        tablaAnimales = new JTable(new Object[0][0], COLUMNAS);
-        tablaAnimales.setEnabled(false); // solo lectura, la edición pasa por el formulario
+        tablaAnimales = crearTablaNoEditable(new Object[0][0]);
         scrollTabla = new JScrollPane(tablaAnimales);
         return scrollTabla;
+    }
+
+    // La tabla debe permitir seleccionar filas (para "Eliminar"), pero no editar
+    // celdas directamente; por eso NO se usa setEnabled(false), que bloquea todo,
+    // incluyendo el clic de selección. En su lugar se sobreescribe isCellEditable.
+    private JTable crearTablaNoEditable(Object[][] datos) {
+        JTable tabla = new JTable(datos, COLUMNAS) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        return tabla;
     }
 
     private void alRegistrar(ActionEvent evento) {
@@ -143,8 +156,7 @@ public class PanelAnimales extends JPanel {
 
     private void refrescarTabla() {
         Object[][] datos = animalControlador.listarActivos();
-        tablaAnimales = new JTable(datos, COLUMNAS);
-        tablaAnimales.setEnabled(false);
+        tablaAnimales = crearTablaNoEditable(datos);
         scrollTabla.setViewportView(tablaAnimales);
     }
     

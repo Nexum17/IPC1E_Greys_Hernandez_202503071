@@ -80,9 +80,21 @@ public class PanelAdoptantes extends JPanel {
         panel.add(componente, r);
     }
 
+    // La tabla debe permitir seleccionar filas, pero no editar celdas
+    // directamente; setEnabled(false) bloquearía también la selección con clic.
+    private JTable crearTablaNoEditable(Object[][] datos) {
+        JTable tabla = new JTable(datos, COLUMNAS) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        return tabla;
+    }
+
     private JScrollPane construirTabla() {
-        tablaAdoptantes = new JTable(new Object[0][0], COLUMNAS);
-        tablaAdoptantes.setEnabled(false);
+        tablaAdoptantes = crearTablaNoEditable(new Object[0][0]);
 
         // Al seleccionar una fila, se cargan sus datos al formulario para poder
         // editarlos
@@ -159,8 +171,7 @@ public class PanelAdoptantes extends JPanel {
 
     private void refrescarTabla() {
         Object[][] datos = adoptanteControlador.listarTodos();
-        tablaAdoptantes = new JTable(datos, COLUMNAS);
-        tablaAdoptantes.setEnabled(false);
+        tablaAdoptantes = crearTablaNoEditable(datos);
         tablaAdoptantes.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && tablaAdoptantes.getSelectedRow() != -1) {
                 cargarFilaEnFormulario(tablaAdoptantes.getSelectedRow());

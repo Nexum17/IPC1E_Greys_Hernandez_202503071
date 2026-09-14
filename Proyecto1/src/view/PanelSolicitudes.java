@@ -87,13 +87,25 @@ public class PanelSolicitudes extends JPanel {
         panel.add(componente, r);
     }
 
+    // Las tablas deben permitir seleccionar filas (para "Aprobar"/"Rechazar"),
+    // pero no editar celdas directamente; setEnabled(false) bloquearía también
+    // la selección con clic.
+    private JTable crearTablaNoEditable(Object[][] datos) {
+        JTable tabla = new JTable(datos, COLUMNAS) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        return tabla;
+    }
+
     private JTabbedPane construirPestanas() {
-        tablaPendientes = new JTable(new Object[0][0], COLUMNAS);
-        tablaPendientes.setEnabled(false);
+        tablaPendientes = crearTablaNoEditable(new Object[0][0]);
         scrollPendientes = new JScrollPane(tablaPendientes);
 
-        tablaHistorial = new JTable(new Object[0][0], COLUMNAS);
-        tablaHistorial.setEnabled(false);
+        tablaHistorial = crearTablaNoEditable(new Object[0][0]);
         scrollHistorial = new JScrollPane(tablaHistorial);
 
         JTabbedPane pestanas = new JTabbedPane();
@@ -173,13 +185,11 @@ public class PanelSolicitudes extends JPanel {
 
     private void refrescarTablas() {
         Object[][] datosPendientes = solicitudControlador.listarPendientes();
-        tablaPendientes = new JTable(datosPendientes, COLUMNAS);
-        tablaPendientes.setEnabled(false);
+        tablaPendientes = crearTablaNoEditable(datosPendientes);
         scrollPendientes.setViewportView(tablaPendientes);
 
         Object[][] datosHistorial = solicitudControlador.listarHistorial();
-        tablaHistorial = new JTable(datosHistorial, COLUMNAS);
-        tablaHistorial.setEnabled(false);
+        tablaHistorial = crearTablaNoEditable(datosHistorial);
         scrollHistorial.setViewportView(tablaHistorial);
     }
 }

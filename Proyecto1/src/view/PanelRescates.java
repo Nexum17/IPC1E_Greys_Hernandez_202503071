@@ -82,9 +82,21 @@ public class PanelRescates extends JPanel {
         panel.add(componente, r);
     }
 
+    // La tabla debe permitir seleccionar filas (para "Atender"), pero no editar
+    // celdas directamente; setEnabled(false) bloquearía también la selección.
+    private JTable crearTablaNoEditable(Object[][] datos) {
+        JTable tabla = new JTable(datos, COLUMNAS) {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        return tabla;
+    }
+
     private JScrollPane construirTabla() {
-        tablaRescates = new JTable(new Object[0][0], COLUMNAS);
-        tablaRescates.setEnabled(false);
+        tablaRescates = crearTablaNoEditable(new Object[0][0]);
         scrollTabla = new JScrollPane(tablaRescates);
         return scrollTabla;
     }
@@ -225,8 +237,7 @@ public class PanelRescates extends JPanel {
 
     private void refrescarTabla() {
         Object[][] datos = rescateControlador.listarActivosPorPrioridad();
-        tablaRescates = new JTable(datos, COLUMNAS);
-        tablaRescates.setEnabled(false);
+        tablaRescates = crearTablaNoEditable(datos);
         scrollTabla.setViewportView(tablaRescates);
     }
 }
