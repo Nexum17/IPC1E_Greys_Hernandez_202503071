@@ -4,14 +4,12 @@ import controller.AnimalControlador;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import model.Animal;
 
 public class PanelAnimales extends JPanel {
 
     private AnimalControlador animalControlador;
 
-    private JTextField campoCodigo, campoNombre, campoEdad;
-    private JComboBox<String> comboEspecie, comboEstadoClinico;
+    private JTextField campoCodigo, campoNombre, campoEdad, campoEspecie, campoEstadoClinico;
     private JTable tablaAnimales;
     private JScrollPane scrollTabla;
     private JLabel etiquetaMensaje;
@@ -40,15 +38,14 @@ public class PanelAnimales extends JPanel {
         campoCodigo = new JTextField(8);
         campoNombre = new JTextField(10);
         campoEdad = new JTextField(4);
-        comboEspecie = new JComboBox<>(new String[] { Animal.ESPECIE_PERRO, Animal.ESPECIE_GATO });
-        comboEstadoClinico = new JComboBox<>(new String[] {
-                Animal.CLINICO_OBSERVACION, Animal.CLINICO_TRATAMIENTO, Animal.CLINICO_APTO });
+        campoEspecie = new JTextField(8);
+        campoEstadoClinico = new JTextField(12);
 
         agregarCampo(panel, r, 0, 0, "Código (A-000):", campoCodigo);
         agregarCampo(panel, r, 2, 0, "Nombre:", campoNombre);
-        agregarCampo(panel, r, 0, 1, "Especie:", comboEspecie);
+        agregarCampo(panel, r, 0, 1, "Especie (Perro/Gato):", campoEspecie);
         agregarCampo(panel, r, 2, 1, "Edad:", campoEdad);
-        agregarCampo(panel, r, 0, 2, "Estado clínico:", comboEstadoClinico);
+        agregarCampo(panel, r, 0, 2, "Estado clínico (EN_OBSERVACION/EN_TRATAMIENTO/APTO):", campoEstadoClinico);
 
         JButton botonRegistrar = new JButton("Registrar");
         botonRegistrar.addActionListener(this::alRegistrar);
@@ -108,9 +105,9 @@ public class PanelAnimales extends JPanel {
     private void alRegistrar(ActionEvent evento) {
         String codigo = campoCodigo.getText().trim();
         String nombre = campoNombre.getText().trim();
-        String especie = (String) comboEspecie.getSelectedItem();
+        String especie = campoEspecie.getText().trim();
         String edad = campoEdad.getText().trim();
-        String estadoClinico = (String) comboEstadoClinico.getSelectedItem();
+        String estadoClinico = campoEstadoClinico.getText().trim();
 
         String resultado = animalControlador.registrar(codigo, nombre, especie, edad, estadoClinico);
         mostrarResultado(resultado);
@@ -150,8 +147,8 @@ public class PanelAnimales extends JPanel {
         campoCodigo.setText("");
         campoNombre.setText("");
         campoEdad.setText("");
-        comboEspecie.setSelectedIndex(0);
-        comboEstadoClinico.setSelectedIndex(0);
+        campoEspecie.setText("");
+        campoEstadoClinico.setText("");
     }
 
     private void refrescarTabla() {

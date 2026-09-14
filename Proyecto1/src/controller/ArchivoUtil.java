@@ -8,7 +8,8 @@ import model.Rescate;
 import model.Solicitud;
 
 public class ArchivoUtil {
-
+    // Constantes privadas y estáticas que centralizan las rutas inmutables de los
+    // archivos .txt para evitar valores fijos en el código.
     private static final String CARPETA = "datos";
     private static final String ARCHIVO_ANIMALES = CARPETA + "/animales.txt";
     private static final String ARCHIVO_ADOPTANTES = CARPETA + "/adoptantes.txt";
@@ -17,14 +18,17 @@ public class ArchivoUtil {
     private static final String ARCHIVO_ACCIONES = CARPETA + "/bitacora_acciones.txt";
     private static final String ARCHIVO_ERRORES = CARPETA + "/bitacora_errores.txt";
 
-    // ---------- ESCRITURA ----------
-
+    //ESCRITURA,// Métodos públicos que llaman al guardado genérico pasando la ruta del archivo, la cantidad de registros y una expresión lambda para obtener cada línea.
     public static String guardarAnimales() {
         return guardarGenerico(ARCHIVO_ANIMALES, Almacen.cantidadAnimales,
                 i -> Almacen.animales[i].aLineaArchivo());
     }
 
     public static String guardarAdoptantes() {
+        // "Manda a guardar a los adoptantes en el archivo .txt enviándole tres datos al
+        // método genérico: dónde guardarlo (ARCHIVO_ADOPTANTES), cuántos hay que
+        // guardar (cantidadAdoptantes), y cómo convertir cada adoptante a texto
+        // (.aLineaArchivo()/texto plano separado por |)"
         return guardarGenerico(ARCHIVO_ADOPTANTES, Almacen.cantidadAdoptantes,
                 i -> Almacen.adoptantes[i].aLineaArchivo());
     }
@@ -44,7 +48,8 @@ public class ArchivoUtil {
                 i -> Almacen.acciones[i].aLineaArchivo());
     }
 
-    public static String guardarBitacoraErrores() {
+    // Interfaz funcional que define el contrato abstracto para obtener el texto de cada registro según su índice.
+    public static String guardarBitacoraErrores() {// Método central de escritura: asegura la carpeta, abre un BufferedWriter con try-with-resources y recorre el arreglo escribiendo cada línea en el archivo
         return guardarGenerico(ARCHIVO_ERRORES, Almacen.cantidadErrores,
                 i -> Almacen.errores[i].aLineaArchivo());
     }

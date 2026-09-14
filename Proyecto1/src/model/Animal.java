@@ -2,8 +2,9 @@ package model;
 
 public class Animal {
 
-    public static final int MAX = 100;
-
+    public static final int MAX = 100;//tamano max
+// Constantes fijas para validar el espacio máximo, especies permitidas,
+// estados médicos y estados de adopción.
     // Dominios permitidos
     public static final String ESPECIE_PERRO = "Perro";
     public static final String ESPECIE_GATO = "Gato";
@@ -86,11 +87,14 @@ public class Animal {
         this.estadoAdopcion = estadoAdopcion;
     }
 
+    // Devuelve true si el animal no ha sido dado de baja lógica (estado distinto de
+    // ELIMINADO).
     public boolean estaActivo() {
         return !ADOPCION_ELIMINADO.equals(estadoAdopcion);
     }
 
-    // Línea para persistencia: codigo|nombre|especie|edad|clinico|adopcion|fecha
+    // Línea para persistencia: codigo|nombre|especie|edad|clinico|adopcion|fecha, Traductores de formato: aLineaArchivo para guardar en el .txt y aFilaTabla
+    // para mostrar en el JTable de la vista.
     public String aLineaArchivo() {
         return codigo + "|" + nombre + "|" + especie + "|" + edadEstimada + "|"
                 + estadoClinico + "|" + estadoAdopcion + "|" + fechaIngreso;
