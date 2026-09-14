@@ -1,8 +1,8 @@
 package controller;
 
-import model.Almacen;
-import model.Adoptante;
-import util.Validador;
+import model.Adoptante;//permiso al controlador de manipular objetos
+import model.Almacen;//periso accedera la clase 
+import util.Validador;//invoca funciones de misma clase parachequear campos
 
 public class AdoptanteControlador {
 

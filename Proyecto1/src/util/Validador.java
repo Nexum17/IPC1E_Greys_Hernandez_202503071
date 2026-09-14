@@ -6,7 +6,7 @@ public class Validador {
     public static boolean esCodigo(String texto, String prefijo) {
         if (texto == null || prefijo == null)
             return false;
-        String patron = "^" + prefijo + "-\\d+$";
+        String patron = "^" + prefijo + "-\\d+$";//empieza sin dejar espacios+prefijo+digito1omasseguidos/fin
         return texto.matches(patron);
     }
 
